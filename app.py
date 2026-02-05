@@ -3,6 +3,9 @@ from models import db, User, Movie
 from data_manager import DataManager
 import os
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -13,7 +16,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 data_manager = DataManager()
 
-OMDB_API_KEY =
+
 
 
 @app.route('/')
