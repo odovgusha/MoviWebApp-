@@ -4,34 +4,39 @@
 
 <h1>{{ user.name }}'s Favorite Movies</h1>
 
-<ul class="movie-list">
+<div class="movie-cards">
     {% for movie in movies %}
-        <li class="movie-entry">
-            <strong>{{ movie.name }}</strong> ({{ movie.year }}) - {{ movie.director }}
-            {% if movie.poster_url %}
-                <br><img src="{{ movie.poster_url }}" alt="{{ movie.name }} poster" width="150">
-            {% endif %}
+    <div class="movie-card">
+        {% if movie.poster_url %}
+            <img src="{{ movie.poster_url }}" alt="{{ movie.name }} poster" class="movie-poster">
+        {% endif %}
+        <div class="movie-info">
+            <h3>{{ movie.name }}</h3>
+            <p><em>{{ movie.year }}</em> | Director: {{ movie.director }}</p>
+        </div>
 
-            <!-- Update movie title -->
+        <div class="movie-actions">
+
             <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post" style="display:inline;">
                 <input type="text" name="new_title" placeholder="New title" required>
                 <button type="submit">Update</button>
             </form>
 
-            <!-- Delete movie -->
+
             <form action="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}" method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
-        </li>
+        </div>
+    </div>
     {% endfor %}
-</ul>
+</div>
 
 <h2>Add a New Movie</h2>
-<form action="{{ url_for('get_movies', user_id=user.id) }}" method="post">
+<form action="{{ url_for('get_movies', user_id=user.id) }}" method="post" class="add-movie-form">
     <input type="text" name="title" placeholder="Movie title" required>
     <button type="submit">Add Movie</button>
 </form>
 
-<a href="{{ url_for('index') }}">Back to Users</a>
+<a href="{{ url_for('index') }}" class="btn">Back to Users</a>
 
 {% endblock %}

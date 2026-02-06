@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>MoviWeb App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
         <h1>MoviWeb App</h1>
-
-            <a href="{{ url_for('index') }}">Home</a>
+        <nav>
+            <a href="{{ url_for('index') }}" class="btn">Home</a>
         </nav>
     </header>
 
@@ -17,4 +17,5 @@
         {% block content %}{% endblock %}
     </main>
 
+</body>
 </html>

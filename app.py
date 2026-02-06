@@ -6,6 +6,7 @@ import requests
 from dotenv import load_dotenv
 
 load_dotenv()
+OMDB_API_KEY = os.getenv("OMDB_API_KEY")
 
 app = Flask(__name__)
 
@@ -55,7 +56,7 @@ def get_movies(user_id):
             )
             data_manager.add_movie(movie)
 
-        return redirect(url_for('user_movies', user_id=user.id))
+        return redirect(url_for('get_movies', user_id=user.id))
 
     movies = data_manager.get_movies(user.id)
     return render_template('movies.html', user=user, movies=movies)
@@ -66,13 +67,13 @@ def update_movie(user_id, movie_id):
     new_title = request.form.get('new_title')
     if new_title:
         data_manager.update_movie(movie_id, new_title)
-    return redirect(url_for('user_movies', user_id=user_id))
+    return redirect(url_for('get_movies', user_id=user_id))
 
 
 @app.route('/users/<int:user_id>/movies/<int:movie_id>/delete', methods=['POST'])
 def delete_movie(user_id, movie_id):
     data_manager.delete_movie(movie_id)
-    return redirect(url_for('user_movies', user_id=user_id))
+    return redirect(url_for('get_movies', user_id=user_id))
 
 
 if __name__ == '__main__':
