@@ -34,7 +34,7 @@ def create_user():
 
 
 @app.route('/users/<int:user_id>/movies', methods=['GET', 'POST'])
-def user_movies(user_id):
+def get_movies(user_id):
     user = User.query.get_or_404(user_id)
 
     if request.method == 'POST':
