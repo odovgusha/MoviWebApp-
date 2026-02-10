@@ -44,21 +44,36 @@ def get_movies(user_id):
     if request.method == 'POST':
         title = request.form.get('title')
         if title:
+            # Check if the user already has this movie
+            existing_movie = Movie.query.filter_by(user_id=user.id, name=title).first()
+            if existing_movie:
+                return render_template('movies.html', user=user, movies=data_manager.get_movies(user.id),
+                                       message=f"Movie '{title}' already exists!")
+
+            # Fetch from OMDB
             response = requests.get(
                 "http://www.omdbapi.com/",
                 params={"t": title, "apikey": OMDB_API_KEY}
             )
             data = response.json()
 
+            if data.get("Response") == "False":
+                return render_template('movies.html', user=user, movies=data_manager.get_movies(user.id),
+                                       message=f"Movie '{title}' not found in OMDB!")
+
+            poster_url = data.get("Poster")
+            if poster_url == "N/A":
+                poster_url = None
+
             movie = Movie(
                 name=title,
                 director=data.get("Director"),
                 year=data.get("Year"),
-                poster_url=data.get("Poster"),
+                poster_url=poster_url,
+                score=data.get("imdbRating"),
                 user_id=user.id
             )
             data_manager.add_movie(movie)
-
         return redirect(url_for('get_movies', user_id=user.id))
 
     movies = data_manager.get_movies(user.id)

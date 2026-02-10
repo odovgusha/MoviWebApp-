@@ -2,6 +2,10 @@
 
 {% block content %}
 
+{% if message %}
+    <p class="message">{{ message }}</p>
+{% endif %}
+
 <h1>{{ user.name }}'s Favorite Movies</h1>
 
 <div class="movie-cards">
@@ -12,7 +16,10 @@
         {% endif %}
         <div class="movie-info">
             <h3>{{ movie.name }}</h3>
-            <p><em>{{ movie.year }}</em> | Director: {{ movie.director }}</p>
+            <p>
+                <em>{{ movie.year }}</em> | Director: {{ movie.director }}
+                {% if movie.score %} | IMDb Score: {{ movie.score }}{% endif %}
+            </p>
         </div>
 
         <div class="movie-actions">

@@ -13,12 +13,10 @@ class User(db.Model):
 
 
 class Movie(db.Model):
-    __tablename__ = 'movie'
-
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    director = db.Column(db.String(100))
-    year = db.Column(db.String(10))
-    poster_url = db.Column(db.String(300))
-
+    name = db.Column(db.String, nullable=False)
+    director = db.Column(db.String)
+    year = db.Column(db.String)
+    poster_url = db.Column(db.String)
+    score = db.Column(db.String)  # <--- Add this line
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
