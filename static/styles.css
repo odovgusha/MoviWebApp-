@@ -112,6 +112,7 @@ form {
     margin-top: 20px;
 }
 
+
 .movie-card {
     background-color: #1e1e1e;
     border-radius: 12px;
@@ -160,4 +161,10 @@ form {
     display: flex;
     gap: 6px;
     margin-top: 15px;
+}
+
+
+.back-btn {
+    display: inline-block; /* ensures margin works */
+    margin-top: 30px;      /* space above the button */
 }

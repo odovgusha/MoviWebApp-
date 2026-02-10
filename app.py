@@ -10,7 +10,10 @@ OMDB_API_KEY = os.getenv("OMDB_API_KEY")
 
 app = Flask(__name__)
 
+
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+os.makedirs(os.path.join(basedir, "data"), exist_ok=True)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data/movies.db')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
