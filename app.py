@@ -66,7 +66,7 @@ def get_movies(user_id):
                 poster_url = None
 
             movie = Movie(
-                name=title,
+                name=data.get("Title"),
                 director=data.get("Director"),
                 year=data.get("Year"),
                 poster_url=poster_url,
