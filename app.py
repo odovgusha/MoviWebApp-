@@ -47,7 +47,7 @@ def index():
 @app.route('/users', methods=['POST'])
 def create_user():
     try:
-        name = request.form.get('name')
+        name = request.form.get('name', '').strip()
         if name:
             data_manager.create_user(name)
         return redirect(url_for('index'))
@@ -61,7 +61,7 @@ def get_movies(user_id):
         user = User.query.get_or_404(user_id)
 
         if request.method == 'POST':
-            title = request.form.get('title')
+            title = request.form.get('title', '').strip()
             if title:
                 existing_movie = Movie.query.filter_by(
                     user_id=user.id,
@@ -127,7 +127,7 @@ def get_movies(user_id):
 @app.route('/users/<int:user_id>/movies/<int:movie_id>/update', methods=['POST'])
 def update_movie(user_id, movie_id):
     try:
-        new_title = request.form.get('new_title')
+        new_title = request.form.get('new_title', '').strip()
         if new_title:
             data_manager.update_movie(movie_id, new_title)
         return redirect(url_for('get_movies', user_id=user_id))
