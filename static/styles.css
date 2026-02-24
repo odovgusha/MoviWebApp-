@@ -168,3 +168,45 @@ form {
     display: inline-block; /* ensures margin works */
     margin-top: 30px;      /* space above the button */
 }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.error-page {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.error-page h1 {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.error-page p {
+    font-size: 18px;
+}
+
+.error-page .back-btn {
+    display: inline-block;
+    margin-top: 60px;
+}
