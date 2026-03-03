@@ -57,11 +57,13 @@ def create_user():
 
 @app.route('/users/<int:user_id>/movies', methods=['GET', 'POST'])
 def get_movies(user_id):
-    try:
-        user = User.query.get_or_404(user_id)
 
+    user = User.query.get_or_404(user_id)
+
+    try:
         if request.method == 'POST':
             title = request.form.get('title', '').strip()
+
             if title:
                 existing_movie = Movie.query.filter_by(
                     user_id=user.id,
@@ -77,10 +79,11 @@ def get_movies(user_id):
                     )
 
                 response = requests.get(
-                    "http://www.omdbapi.com/",
+                    "https://www.omdbapi.com/",
                     params={"t": title, "apikey": OMDB_API_KEY},
                     timeout=5
                 )
+                response.raise_for_status()
 
                 data = response.json()
 
@@ -92,15 +95,11 @@ def get_movies(user_id):
                         message=f"Movie '{title}' not found in OMDB!"
                     )
 
-                poster_url = data.get("Poster")
-                if poster_url == "N/A":
-                    poster_url = None
-
                 movie = Movie(
                     name=data.get("Title"),
                     director=data.get("Director"),
                     year=data.get("Year"),
-                    poster_url=poster_url,
+                    poster_url=data.get("Poster"),
                     score=data.get("imdbRating"),
                     user_id=user.id
                 )
@@ -119,9 +118,6 @@ def get_movies(user_id):
             movies=data_manager.get_movies(user.id),
             message="Error connecting to OMDB service."
         )
-
-    except Exception:
-        return render_template('500.html'), 500
 
 
 @app.route('/users/<int:user_id>/movies/<int:movie_id>/update', methods=['POST'])
